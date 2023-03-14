@@ -5,6 +5,10 @@ import "./App.css";
 function App() {
 	const [color, setColor] = useState("");
 	const [colorList, setColorList] = useState(new Values("#ff0000").all(20));
+	//const [clicked, setClicked] = useState();
+
+	//var copyText = clicked ? <div className="color_copy">Copied</div> : "";
+
 	const onColorHandler = (e) => {
 		setColor(e.target.value);
 	};
@@ -16,6 +20,7 @@ function App() {
 
 		setColor("");
 	};
+
 	console.log(colorList);
 	return (
 		<div className="App">
@@ -52,26 +57,32 @@ function App() {
 				}}
 			>
 				<div className="color_content">
-					{colorList.map((index, color) => {
+					{colorList.map((index) => {
 						return (
-							<div
-								key={index}
-								style={{
-									backgroundColor: `#${index.hex}`,
-									color: `${index < 10 ? "#000000" : "#ffffff"}`,
-									border: "1px solid lightgrey",
-									marginRight: "10px",
-									height: "150px",
-									borderRadius: "10px",
-									paddingTop: "10px",
-								}}
-								onClick={() => {
-									navigator.clipboard.writeText(`#${index.hex}`);
-									alert("Copied the Hex color");
-								}}
-							>
-								#{index.hex}
-							</div>
+							<>
+								<div
+									key={index.hex}
+									style={{
+										backgroundColor: `#${index.hex}`,
+										border: "1px solid lightgrey",
+										marginRight: "10px",
+										height: "150px",
+										borderRadius: "10px",
+										paddingTop: "10px",
+										position: "relative",
+										cursor: "pointer",
+									}}
+									className="color_box"
+									onClick={() => {
+										navigator.clipboard.writeText(`#${index.hex}`);
+										//setClicked(!clicked);
+										alert("Copied the hex color");
+									}}
+								>
+									#{index.hex}
+									{/* {copyText} */}
+								</div>
+							</>
 						);
 					})}
 				</div>
