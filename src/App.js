@@ -1,30 +1,29 @@
 import { useState } from "react";
 import Values from "values.js";
 import "./App.css";
+import ColorBox from "./components/ColorBox";
 
 function App() {
+	/* input field for hex-color */
 	const [color, setColor] = useState("");
-	const [colorList, setColorList] = useState(new Values("#ff0000").all(20));
-	//const [clicked, setClicked] = useState();
-
-	//var copyText = clicked ? <div className="color_copy">Copied</div> : "";
-
+	/* list of several hex-colors of the entered hex color*/
+	const [colorList, setColorList] = useState(new Values("#ff0000").all(10));
 	const onColorHandler = (e) => {
 		setColor(e.target.value);
 	};
+	/* generating the colors by clicking on the button */
 	const onSubmitHandler = (e) => {
 		e.preventDefault();
 		const newcolorList = new Values(color).all(10);
-		console.log(newcolorList);
 		setColorList(newcolorList);
 
 		setColor("");
 	};
-
-	console.log(colorList);
 	return (
 		<div className="App">
+		 
 			<h1>Color Generator</h1>
+			{/* Input fields for hex color (text) */}
 			<label htmlFor="">
 				Enter:
 				<input
@@ -36,6 +35,7 @@ function App() {
 				/>
 			</label>
 			OR &nbsp;&nbsp;&nbsp;
+			{/* Input fields for hex color (color) */}
 			<label htmlFor="">
 				Select:
 				<input
@@ -46,9 +46,11 @@ function App() {
 					style={{ marginRight: "1rem" }}
 				/>
 			</label>
+			{/* button for generating the colors by clicking on it */}
 			<button type="submit" onClick={onSubmitHandler}>
 				Generate
 			</button>
+			{/* list of the hex-colors */}
 			<section
 				style={{
 					display: "flex",
@@ -60,28 +62,8 @@ function App() {
 					{colorList.map((index) => {
 						return (
 							<>
-								<div
-									key={index.hex}
-									style={{
-										backgroundColor: `#${index.hex}`,
-										border: "1px solid lightgrey",
-										marginRight: "10px",
-										height: "150px",
-										borderRadius: "10px",
-										paddingTop: "10px",
-										position: "relative",
-										cursor: "pointer",
-									}}
-									className="color_box"
-									onClick={() => {
-										navigator.clipboard.writeText(`#${index.hex}`);
-										//setClicked(!clicked);
-										alert("Copied the hex color");
-									}}
-								>
-									#{index.hex}
-									{/* {copyText} */}
-								</div>
+							{/* generated hex-color component */}
+								<ColorBox HexColor={index.hex} key={index.hex} />
 							</>
 						);
 					})}
